@@ -1,0 +1,5 @@
+rootProject.name = 'ExoticTradesMap'
+include ':'
+include 'extrade-squaremap'
+include 'extrade-dynmap'
+include 'extrade-bluemap'

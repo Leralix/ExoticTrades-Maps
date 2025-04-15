@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    tasks.register('copyPluginYml', Copy) {
+        from "$projectDir/src/main/resources/plugin.yml"
+        into "$buildDir/resources/main"
+    }
+
+    jar {
+        from rootProject.sourceSets.main.output
+    }
+
+    def targetJavaVersion = project.name == "extrade-bluemap" ? 21 : 17
+    java {
+        def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+        sourceCompatibility = targetJavaVersion
+        targetCompatibility = targetJavaVersion
+        if (JavaVersion.current() < javaVersion) {
+            toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+            options.release.set(targetJavaVersion)
+        }
+    }
+
+    processResources {
+        processResources {
+            filesMatching('plugin.yml') {
+                expand(version: rootProject.version)
+            }
+        }
+    }
+}
+
+allprojects {
+    group = 'io.github.leralix'
+    version = '0.1.0'
+
+    compileJava.options.encoding = 'UTF-8'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            name = "spigotmc-repo"
+            url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/groups/public/"
+        }
+    }
+
+    dependencies {
+        compileOnly "org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT"
+        compileOnly 'io.github.leralix:sphere-lib:0.4.4'
+        compileOnly "io.github.leralix:extrade-api:0.2.4"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
