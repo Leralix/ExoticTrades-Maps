@@ -54,12 +54,16 @@ public abstract class CommonMarkerRegister {
         if(res == null)
             return "No description";
 
+        String traderName = trader.getName();
+        if(traderName == null)
+            traderName = "Unnamed trader";
+
         StringBuilder itemList = new StringBuilder();
         for(ExRareItem item : trader.getItemsSold()){
             itemList.append(item.getName()).append(" : ").append(item.getPrice()).append("\n").append("<br>");
         }
 
-        res = res.replace("%TRADER_NAME%", trader.getName())
+        res = res.replace("%TRADER_NAME%", traderName)
                         .replace("%TRADER_ID%", trader.getID())
                         .replace("%NB_HOURS_BEFORE_NEXT_POSITION%", Integer.toString(trader.getNbHoursBeforeNextPosition()))
                         .replace("%ALL_TRADES%", itemList);
