@@ -34,6 +34,7 @@ public class UpdateTraders implements Runnable {
 
         for(ExTrader trader : extradeAPI.getPlayerManager().getTraders()){
             traderMarkerRegister.addTraderMarker(trader);
+            traderMarkerRegister.addPotentialPositionMarker(trader);
         }
 
 

@@ -3,6 +3,7 @@ package io.github.leralix.extrade.map;
 import io.github.leralix.ExtradeAPI;
 import io.github.leralix.extrade.map.commands.PlayerCommandManager;
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
+import io.github.leralix.extrade.map.markers.IconType;
 import io.github.leralix.extrade.map.update.UpdateTraders;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -61,8 +62,13 @@ public abstract class ExoticTradeMapCommon extends JavaPlugin {
         checkConfigVersion();
         initialise();
 
+        registerIcon(IconType.TRADER);
+        registerIcon(IconType.TRADER_POTENTIAL);
+
         logger.info(subMapName + "Plugin is running");
     }
+
+    protected abstract void registerIcon(IconType iconType);
 
     private void checkConfigVersion() {
         String configFileName = "config.yml";

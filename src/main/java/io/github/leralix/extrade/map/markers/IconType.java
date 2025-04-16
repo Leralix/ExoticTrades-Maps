@@ -2,8 +2,8 @@ package io.github.leralix.extrade.map.markers;
 
 public enum IconType {
 
-    TRADER("Trader.png"),
-    TRADER_POTENTIAL("TraderPotential.png");
+    TRADER("Emerald.png"),
+    TRADER_POTENTIAL("Emerald_Blank.png");
 
     final String fileName;
 

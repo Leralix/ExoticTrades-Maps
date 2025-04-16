@@ -1,5 +1,6 @@
 package io.github.leralix.extrade.map.markers;
 
+import io.github.leralix.interfaces.ExRareItem;
 import io.github.leralix.interfaces.ExTrader;
 import io.github.leralix.extrade.map.ExoticTradeMapCommon;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -39,11 +40,28 @@ public abstract class CommonMarkerRegister {
 
     public abstract void addTraderMarker(ExTrader trader);
 
+    public abstract void addPotentialPositionMarker(ExTrader trader);
+
     public abstract void deleteAllMarkers();
 
     protected String generateDescription(ExTrader trader) {
 
-        return "trader : " + trader.getID();
+        String res = ExoticTradeMapCommon.getPlugin().getConfig().getString("trader_infowindow");
+
+        if(res == null)
+            return "No description";
+
+        StringBuilder itemList = new StringBuilder();
+        for(ExRareItem item : trader.getItemsSold()){
+            itemList.append(item.getName()).append(" : ").append(item.getPrice()).append("\n").append("<br>");
+        }
+
+        res = res.replace("%TRADER_NAME%", trader.getName())
+                        .replace("%TRADER_ID%", trader.getID())
+                        .replace("%NEXT_POSITION_DEPARTING_HOURS%", "10")
+                        .replace("%ALL_TRADES%", itemList);
+
+        return res;
 
     }
 

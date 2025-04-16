@@ -6,6 +6,7 @@ import io.github.leralix.extrade.map.markers.IconType;
 import io.github.leralix.extrade.map.storage.ExTradeKey;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.leralix.lib.position.Vector3D;
 import xyz.jpenilla.squaremap.api.*;
 import xyz.jpenilla.squaremap.api.marker.Marker;
 import xyz.jpenilla.squaremap.api.marker.MarkerOptions;
@@ -71,7 +72,6 @@ public class ExtradeSquaremapMarkerRegister extends CommonMarkerRegister {
     @Override
     public void addTraderMarker(ExTrader trader) {
 
-
         Point point = Point.of(trader.getCurrentPosition().getX(), trader.getCurrentPosition().getZ());
 
         MarkerOptions markerOptions = MarkerOptions.builder().
@@ -86,6 +86,25 @@ public class ExtradeSquaremapMarkerRegister extends CommonMarkerRegister {
         traderLayerMap.get(key).addMarker(Key.of(trader.getID()), marker);
     }
 
+    @Override
+    public void addPotentialPositionMarker(ExTrader trader) {
+
+        for(Vector3D potentialPosition : trader.getPotentialPosition()) {
+            Point point = Point.of(potentialPosition.getX(), potentialPosition.getZ());
+
+            MarkerOptions markerOptions = MarkerOptions.builder().
+                    hoverTooltip(generateDescription(trader)).
+                    build();
+
+            String imageKey = IconType.TRADER_POTENTIAL.getFileName();
+
+            Marker marker = Marker.icon(point, Key.of(imageKey),16).markerOptions(markerOptions);
+
+            ExTradeKey key = new ExTradeKey(potentialPosition.getWorld());
+            traderPotentialPositionLayerMap.get(key).addMarker(Key.of(trader.getID()), marker);
+        }
+
+    }
 
 
     @Override
