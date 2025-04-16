@@ -4,7 +4,8 @@ update:
   # Seconds between checks for map update
   period: 300
 
-
+#Show potential trader spawns on the map
+show_potential_trader_spawn : true
 
 # Territory Layer (Towns, Regions and Nations)
 trader_layer:
@@ -56,4 +57,4 @@ potential_trader_spawn_layer:
 #%TOWN_LIST% - List of towns in the region
 #%REGION_CAPITAL% - Capital of the region
 
-trader_infowindow: '<div class="infowindow"><br></br><span style="font-size:140%;font-weight:bold;">%TRADER_NAME%</span><span style="font-size:80%">Will leave in %NEXT_POSITION_DEPARTING_HOURS% hours(s) ago</span><br><br><b>Sells</b></span><br>%ALL_TRADES%</div>'
+trader_infowindow: '<div class="infowindow"><span style="font-size:140%;font-weight:bold;">%TRADER_NAME%</span><br><span style="font-size:80%">Will leave in %NB_HOURS_BEFORE_NEXT_POSITION% hours(s)</span><br><br><b>Sells</b><br>%ALL_TRADES%</div>'

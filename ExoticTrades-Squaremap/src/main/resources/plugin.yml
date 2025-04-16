@@ -1,4 +1,4 @@
-name: extrade-squaremap
+name: ExoticTrades-Squaremap
 version: '${version}'
 main: io.github.leralix.extrade.squaremap.ExoticTradesSquaremap
 api-version: '1.19'

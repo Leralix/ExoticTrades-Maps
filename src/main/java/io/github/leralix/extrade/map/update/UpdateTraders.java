@@ -31,10 +31,13 @@ public class UpdateTraders implements Runnable {
 
         ExtradeAPI extradeAPI = ExtradeAPI.getInstance();
 
+        boolean showTraderPotentialPositions = ExoticTradeMapCommon.getPlugin().getConfig().getBoolean("show_potential_trader_spawn");
 
         for(ExTrader trader : extradeAPI.getPlayerManager().getTraders()){
             traderMarkerRegister.addTraderMarker(trader);
-            traderMarkerRegister.addPotentialPositionMarker(trader);
+            if(showTraderPotentialPositions){
+                traderMarkerRegister.addPotentialPositionMarker(trader);
+            }
         }
 
 

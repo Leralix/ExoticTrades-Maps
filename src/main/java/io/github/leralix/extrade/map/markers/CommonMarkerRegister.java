@@ -23,6 +23,9 @@ public abstract class CommonMarkerRegister {
         List<String> worldsName = cfg.getStringList("trader_layer.worlds");
         setupLandmarkLayer(id, name, minZoom, chunkLayerPriority, hideByDefault, worldsName);
 
+        boolean showTraderPotentialPositions = ExoticTradeMapCommon.getPlugin().getConfig().getBoolean("show_potential_trader_spawn");
+        if(!showTraderPotentialPositions)
+            return;
 
         String id2 = "extrade.trader_potential_position";
         String name2 = cfg.getString("potential_trader_spawn_layer.name", "Exotic Trades - Potential trader positions");
@@ -58,7 +61,7 @@ public abstract class CommonMarkerRegister {
 
         res = res.replace("%TRADER_NAME%", trader.getName())
                         .replace("%TRADER_ID%", trader.getID())
-                        .replace("%NEXT_POSITION_DEPARTING_HOURS%", "10")
+                        .replace("%NB_HOURS_BEFORE_NEXT_POSITION%", Integer.toString(trader.getNbHoursBeforeNextPosition()))
                         .replace("%ALL_TRADES%", itemList);
 
         return res;

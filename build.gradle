@@ -23,7 +23,7 @@ subprojects {
         from rootProject.sourceSets.main.output
     }
 
-    def targetJavaVersion = project.name == "extrade-bluemap" ? 21 : 17
+    def targetJavaVersion = project.name == "ExoticTrades-Bluemap" ? 21 : 17
     java {
         def javaVersion = JavaVersion.toVersion(targetJavaVersion)
         sourceCompatibility = targetJavaVersion
