@@ -5,7 +5,7 @@ update:
   period: 300
 
 #Show potential trader spawns on the map
-show_potential_trader_spawn : true
+show_potential_trader_spawn : false
 
 # Territory Layer (Towns, Regions and Nations)
 trader_layer:
