@@ -101,7 +101,8 @@ public class ExtradeSquaremapMarkerRegister extends CommonMarkerRegister {
             Marker marker = Marker.icon(point, Key.of(imageKey),16).markerOptions(markerOptions);
 
             ExTradeKey key = new ExTradeKey(potentialPosition.getWorld());
-            traderPotentialPositionLayerMap.get(key).addMarker(Key.of(trader.getID()), marker);
+            Key traderKey = Key.of(trader.getID() + "_" + potentialPosition.getX() + "_" + potentialPosition.getY() + "_" + potentialPosition.getZ() + "_" + potentialPosition.getWorld().getName());
+            traderPotentialPositionLayerMap.get(key).addMarker(traderKey, marker);
         }
 
     }
