@@ -21,7 +21,7 @@ public abstract class CommonMarkerRegister {
         int chunkLayerPriority =  Math.max(cfg.getInt("trader_layer.priority", 10),0);
         boolean hideByDefault = cfg.getBoolean("trader_layer.hide_by_default", false);
         List<String> worldsName = cfg.getStringList("trader_layer.worlds");
-        setupLandmarkLayer(id, name, minZoom, chunkLayerPriority, hideByDefault, worldsName);
+        setupTraderLayer(id, name, minZoom, chunkLayerPriority, hideByDefault, worldsName);
 
         boolean showTraderPotentialPositions = ExoticTradeMapCommon.getPlugin().getConfig().getBoolean("show_potential_trader_spawn");
         if(!showTraderPotentialPositions)
@@ -33,11 +33,11 @@ public abstract class CommonMarkerRegister {
         int chunkLayerPriority2 =  Math.max(cfg.getInt("potential_trader_spawn_layer.priority", 10),0);
         boolean hideByDefault2 = cfg.getBoolean("potential_trader_spawn_layer.hide_by_default", false);
         List<String> worldsName2 = cfg.getStringList("potential_trader_spawn_layer.worlds");
-        setupChunkLayer(id2, name2, minZoom2, chunkLayerPriority2, hideByDefault2, worldsName2);
+        setupPotentialTraderLayer(id2, name2, minZoom2, chunkLayerPriority2, hideByDefault2, worldsName2);
     }
 
-    protected abstract void setupLandmarkLayer(String id, String name, int minZoom, int chunkLayerPriority, boolean hideByDefault, List<String> worldsName);
-    protected abstract void setupChunkLayer(String id, String name, int minZoom, int chunkLayerPriority, boolean hideByDefault, List<String> worldsName);
+    protected abstract void setupTraderLayer(String id, String name, int minZoom, int chunkLayerPriority, boolean hideByDefault, List<String> worldsName);
+    protected abstract void setupPotentialTraderLayer(String id, String name, int minZoom, int chunkLayerPriority, boolean hideByDefault, List<String> worldsName);
 
     public abstract boolean isWorking();
 

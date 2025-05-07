@@ -1,0 +1,10 @@
+name: ExoticTrades-Dynmap
+version: '${version}'
+main: io.github.leralix.extrade.squaremap.ExoticTradesDynmap
+api-version: '1.19'
+depend:  [ExoticTrades, dynmap, SphereLib]
+commands:
+  trademap:
+    description: ExoticTrades admin command
+    permission: extrade_dynmap.admin
+    usage: /<command>
