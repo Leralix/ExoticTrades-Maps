@@ -57,4 +57,4 @@ potential_trader_spawn_layer:
 #%TOWN_LIST% - List of towns in the region
 #%REGION_CAPITAL% - Capital of the region
 
-trader_infowindow: '<div class="infowindow"><span style="font-size:140%;font-weight:bold;">%TRADER_NAME%</span><br><span style="font-size:80%">Will leave in %NB_HOURS_BEFORE_NEXT_POSITION% hours(s)</span><br><br><b>Sells</b><br>%ALL_TRADES%</div>'
+trader_infowindow: '<div style="white-space: nowrap"><div class="infowindow"><span style="font-size:140%;font-weight:bold;">%TRADER_NAME%</span><br><span style="font-size:80%">Will leave in %NB_HOURS_BEFORE_NEXT_POSITION% hours(s)</span><br><br><b>Sells</b><br>%ALL_TRADES%</div></div>'
