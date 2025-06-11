@@ -1,6 +1,7 @@
 package io.github.leralix.extrade.squaremap;
 
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
+import io.github.leralix.extrade.map.markers.IconType;
 import io.github.leralix.interfaces.ExTrader;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
@@ -9,6 +10,8 @@ import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerSet;
 import org.leralix.lib.position.Vector3D;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class ExtradeDynmapMarkerRegister extends CommonMarkerRegister {
@@ -51,7 +54,15 @@ public class ExtradeDynmapMarkerRegister extends CommonMarkerRegister {
         }
 
         Vector3D location = trader.getCurrentPosition();
-        marker = traderMarketSet.createMarker(trader.getID(), trader.getName(), location.getWorld().getName(), location.getX(), location.getY(), location.getZ(), api.getMarkerIcon("diamond"), true);
+        marker = traderMarketSet.createMarker(
+                trader.getID(),
+                trader.getName(),
+                location.getWorld().getName(),
+                location.getX(),
+                location.getY(),
+                location.getZ(),
+                api.getMarkerIcon(IconType.TRADER.getIconName()),
+                true);
         marker.setDescription(generateDescription(trader));
     }
 
@@ -68,7 +79,13 @@ public class ExtradeDynmapMarkerRegister extends CommonMarkerRegister {
             Vector3D location = trader.getCurrentPosition();
             marker = traderMarketSet.createMarker(
                     trader.getID() +  "_" + potentialPosition.getX() + "_" + potentialPosition.getY() + "_" + potentialPosition.getZ() + "_" + potentialPosition.getWorld().getName(),
-                    trader.getName(), location.getWorld().getName(), location.getX(), location.getY(), location.getZ(), api.getMarkerIcon("diamond"), true);
+                    trader.getName(),
+                    location.getWorld().getName(),
+                    location.getX(),
+                    location.getY(),
+                    location.getZ(),
+                    api.getMarkerIcon(IconType.TRADER_POTENTIAL.getIconName()),
+                    true);
             marker.setDescription(generateDescription(trader));
         }
 
@@ -83,6 +100,19 @@ public class ExtradeDynmapMarkerRegister extends CommonMarkerRegister {
         if(traderPotentialMarkerSet != null) {
             for (Marker marker : traderPotentialMarkerSet.getMarkers()) {
                 marker.deleteMarker();
+            }
+        }
+    }
+
+    @Override
+    public void registerIcons() {
+        for (IconType iconType : IconType.values()) {
+            try {
+                final InputStream in = ExoticTradesDynmap.getPlugin().getResource("icons/" + iconType.getFileName());
+                if (in == null) throw new IOException("Resource not found: " + "icons/" + iconType.getFileName());
+                api.createMarkerIcon(iconType.getIconName(), iconType.getIconName(), in);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

@@ -62,13 +62,8 @@ public abstract class ExoticTradeMapCommon extends JavaPlugin {
         checkConfigVersion();
         initialise();
 
-        registerIcon(IconType.TRADER);
-        registerIcon(IconType.TRADER_POTENTIAL);
-
         logger.info(subMapName + "Plugin is running");
     }
-
-    protected abstract void registerIcon(IconType iconType);
 
     private void checkConfigVersion() {
         String configFileName = "config.yml";
@@ -105,7 +100,7 @@ public abstract class ExoticTradeMapCommon extends JavaPlugin {
         }
         logger.info(subMapName +  "Marker API found");
 
-
+        markerRegister.registerIcons();
 
         int per = getConfig().getInt("update.period", 300);
         if(per < 15) per = 15;

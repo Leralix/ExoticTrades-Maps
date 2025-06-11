@@ -5,6 +5,7 @@ import de.bluecolored.bluemap.api.BlueMapMap;
 import de.bluecolored.bluemap.api.markers.MarkerSet;
 import de.bluecolored.bluemap.api.markers.POIMarker;
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
+import io.github.leralix.extrade.map.markers.IconType;
 import io.github.leralix.extrade.map.storage.ExTradeKey;
 import io.github.leralix.interfaces.ExTrader;
 import org.bukkit.Bukkit;
@@ -12,6 +13,12 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.leralix.lib.position.Vector3D;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class ExtradeBluemapMarkerRegister extends CommonMarkerRegister {
@@ -76,11 +83,13 @@ public class ExtradeBluemapMarkerRegister extends CommonMarkerRegister {
 
     @Override
     public void addTraderMarker(ExTrader trader) {
+
         Location location = trader.getCurrentPosition().getLocation();
         World world = location.getWorld();
         POIMarker marker = POIMarker.builder()
                 .label(trader.getName())
                 .detail(generateDescription(trader))
+                .icon("assets/Emerald.png", 1, 1)
                 .position(location.getX(), location.getY(), location.getZ())
                 .maxDistance(2000)
                 .build();
@@ -97,6 +106,7 @@ public class ExtradeBluemapMarkerRegister extends CommonMarkerRegister {
             World world = location.getWorld();
             POIMarker marker = POIMarker.builder()
                     .label(trader.getName())
+                    .icon("Emerald.png", 1, 1)
                     .detail(generateDescription(trader))
                     .position(location.getX(), location.getY(), location.getZ())
                     .maxDistance(2000)
@@ -111,5 +121,30 @@ public class ExtradeBluemapMarkerRegister extends CommonMarkerRegister {
     @Override
     public void deleteAllMarkers() {
 
+    }
+
+    @Override
+    public void registerIcons() {
+        for (IconType iconType : IconType.values()) {
+            copyResourceToBlueMapWebApp(api.getWebApp().getWebRoot(), "icons/" + iconType.getFileName(), "exotictrades/" + iconType.getFileName());
+        }
+    }
+
+    private void copyResourceToBlueMapWebApp(final Path webroot, final String fromResource, final String toAsset){
+        final Path toPath = webroot.resolve("assets").resolve(toAsset);
+        try {
+            Files.createDirectories(toPath.getParent());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try (
+                final InputStream in = ExoticTradesBluemap.getPlugin().getResource(fromResource);
+                final OutputStream out = Files.newOutputStream(toPath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
+        ){
+            if (in == null) throw new IOException("Resource not found: " + fromResource);
+            in.transferTo(out);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

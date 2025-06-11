@@ -11,6 +11,10 @@ import xyz.jpenilla.squaremap.api.*;
 import xyz.jpenilla.squaremap.api.marker.Marker;
 import xyz.jpenilla.squaremap.api.marker.MarkerOptions;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class ExtradeSquaremapMarkerRegister extends CommonMarkerRegister {
@@ -111,5 +115,21 @@ public class ExtradeSquaremapMarkerRegister extends CommonMarkerRegister {
     @Override
     public void deleteAllMarkers() {
 
+    }
+
+    @Override
+    public void registerIcons() {
+        for(IconType iconType : IconType.values()){
+            ExoticTradesSquaremap.getPlugin().saveResource("icons/" + iconType.getFileName(), true);
+            try {
+                File file = new File(ExoticTradesSquaremap.getPlugin().getDataFolder(), "icons/" + iconType.getFileName());
+                BufferedImage image = ImageIO.read(file);
+                if(SquaremapProvider.get().iconRegistry().hasEntry(Key.of(iconType.getFileName())))
+                    SquaremapProvider.get().iconRegistry().unregister(Key.of(iconType.getFileName()));
+                SquaremapProvider.get().iconRegistry().register(Key.of(iconType.getFileName()),image);
+            } catch (IOException e) {
+                throw new RuntimeException("Error while loading : " + iconType.getFileName(), e);
+            }
+        }
     }
 }

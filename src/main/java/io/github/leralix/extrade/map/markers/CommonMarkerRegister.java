@@ -72,4 +72,5 @@ public abstract class CommonMarkerRegister {
 
     }
 
+    public abstract void registerIcons();
 }

@@ -5,13 +5,11 @@ import io.github.leralix.extrade.map.ExoticTradeMapCommon;
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
 import io.github.leralix.extrade.map.markers.IconType;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class ExoticTradesDynmap extends ExoticTradeMapCommon {
-
-
-    @Override
-    protected void registerIcon(IconType iconType) {
-
-    }
 
     @Override
     protected String getSubMapName() {

@@ -16,24 +16,6 @@ public class ExoticTradesSquaremap extends ExoticTradeMapCommon {
 
 
     @Override
-    protected void registerIcon(IconType iconType) {
-
-        for(IconType type : IconType.values()){
-            ExoticTradesSquaremap.getPlugin().saveResource("icons/" + type.getFileName(), true);
-        }
-
-        try {
-            File file = new File(getPlugin().getDataFolder(), "icons/" + iconType.getFileName());
-            BufferedImage image = ImageIO.read(file);
-            if(SquaremapProvider.get().iconRegistry().hasEntry(Key.of(iconType.getFileName())))
-                SquaremapProvider.get().iconRegistry().unregister(Key.of(iconType.getFileName()));
-            SquaremapProvider.get().iconRegistry().register(Key.of(iconType.getFileName()),image);
-        } catch (IOException e) {
-            throw new RuntimeException("Erreur lors du chargement de landmark.png", e);
-        }
-    }
-
-    @Override
     protected String getSubMapName() {
         return "Squaremap";
     }
