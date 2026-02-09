@@ -4,6 +4,7 @@ import de.bluecolored.bluemap.api.BlueMapAPI;
 import de.bluecolored.bluemap.api.BlueMapMap;
 import de.bluecolored.bluemap.api.markers.MarkerSet;
 import de.bluecolored.bluemap.api.markers.POIMarker;
+import io.github.leralix.extrade.map.ExoticTradeMapCommon;
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
 import io.github.leralix.extrade.map.markers.IconType;
 import io.github.leralix.extrade.map.storage.ExTradeKey;
@@ -13,15 +14,18 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.leralix.lib.position.Vector3D;
 
-import java.io.IOException;
+import java.io.File;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ExtradeBluemapMarkerRegister extends CommonMarkerRegister {
+
+    private static final String PATH = "assets/TownsAndNations/";
 
     private BlueMapAPI api;
 
@@ -89,7 +93,7 @@ public class ExtradeBluemapMarkerRegister extends CommonMarkerRegister {
         POIMarker marker = POIMarker.builder()
                 .label(trader.getName())
                 .detail(generateDescription(trader))
-                .icon("assets/Emerald.png", 1, 1)
+                .icon(PATH + IconType.TRADER.getFileName(), 1, 1)
                 .position(location.getX(), location.getY(), location.getZ())
                 .maxDistance(2000)
                 .build();
@@ -106,7 +110,7 @@ public class ExtradeBluemapMarkerRegister extends CommonMarkerRegister {
             World world = location.getWorld();
             POIMarker marker = POIMarker.builder()
                     .label(trader.getName())
-                    .icon("Emerald.png", 1, 1)
+                    .icon(PATH + IconType.TRADER_POTENTIAL.getFileName(), 1, 1)
                     .detail(generateDescription(trader))
                     .position(location.getX(), location.getY(), location.getZ())
                     .maxDistance(2000)
@@ -124,27 +128,26 @@ public class ExtradeBluemapMarkerRegister extends CommonMarkerRegister {
     }
 
     @Override
-    public void registerIcons() {
-        for (IconType iconType : IconType.values()) {
-            copyResourceToBlueMapWebApp(api.getWebApp().getWebRoot(), "icons/" + iconType.getFileName(), "exotictrades/" + iconType.getFileName());
+    public void registerIcon(IconType iconType) {
+        File serverRoot = Bukkit.getServer().getWorldContainer(); // racine du serveur
+        File folder = new File(serverRoot, "bluemap/web/" + PATH);
+
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
+        File destination = new File(folder, iconType.getFileName());
+
+        try (InputStream in = ExoticTradeMapCommon.getPlugin().getResource("icons/" + iconType.getFileName())) {
+            if (in == null) {
+                throw new RuntimeException("Resource not found: " + iconType.getFileName());
+            }
+            Files.createDirectories(destination.getParentFile().toPath()); // Crée les dossiers si besoin
+            Files.copy(in, destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while loading icon: " + iconType.getFileName(), e);
         }
     }
 
-    private void copyResourceToBlueMapWebApp(final Path webroot, final String fromResource, final String toAsset){
-        final Path toPath = webroot.resolve("assets").resolve(toAsset);
-        try {
-            Files.createDirectories(toPath.getParent());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try (
-                final InputStream in = ExoticTradesBluemap.getPlugin().getResource(fromResource);
-                final OutputStream out = Files.newOutputStream(toPath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
-        ){
-            if (in == null) throw new IOException("Resource not found: " + fromResource);
-            in.transferTo(out);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 }

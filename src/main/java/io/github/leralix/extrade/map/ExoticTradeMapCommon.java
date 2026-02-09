@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.leralix.lib.data.PluginVersion;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
@@ -100,7 +101,7 @@ public abstract class ExoticTradeMapCommon extends JavaPlugin {
         }
         logger.info(subMapName +  "Marker API found");
 
-        markerRegister.registerIcons();
+        registerIcons(markerRegister);
 
         int per = getConfig().getInt("update.period", 300);
         if(per < 15) per = 15;
@@ -139,6 +140,20 @@ public abstract class ExoticTradeMapCommon extends JavaPlugin {
 
     protected abstract CommonMarkerRegister createMarkerRegister();
 
+    private void registerIcons(CommonMarkerRegister markerRegister) {
+        File iconsDir = new File(getDataFolder(), "icons");
+        if (!iconsDir.exists()) {
+            iconsDir.mkdirs();
+        }
+
+        for (IconType iconType : IconType.values()) {
+            File iconFile = new File(iconsDir, iconType.getFileName());
+            if (!iconFile.exists()) {
+                getPlugin().saveResource("icons/" + iconType.getFileName(), true);
+            }
+            markerRegister.registerIcon(iconType);
+        }
+    }
 }
 
 

@@ -1,8 +1,8 @@
 package io.github.leralix.extrade.map.markers;
 
+import io.github.leralix.extrade.map.ExoticTradeMapCommon;
 import io.github.leralix.interfaces.ExRareItem;
 import io.github.leralix.interfaces.ExTrader;
-import io.github.leralix.extrade.map.ExoticTradeMapCommon;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
@@ -72,5 +72,5 @@ public abstract class CommonMarkerRegister {
 
     }
 
-    public abstract void registerIcons();
+    public abstract void registerIcon(IconType iconType);
 }

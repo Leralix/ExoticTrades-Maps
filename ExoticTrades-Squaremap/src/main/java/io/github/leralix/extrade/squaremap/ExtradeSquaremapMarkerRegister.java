@@ -1,9 +1,10 @@
 package io.github.leralix.extrade.squaremap;
 
-import io.github.leralix.interfaces.ExTrader;
+import io.github.leralix.extrade.map.ExoticTradeMapCommon;
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
 import io.github.leralix.extrade.map.markers.IconType;
 import io.github.leralix.extrade.map.storage.ExTradeKey;
+import io.github.leralix.interfaces.ExTrader;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.leralix.lib.position.Vector3D;
@@ -118,18 +119,16 @@ public class ExtradeSquaremapMarkerRegister extends CommonMarkerRegister {
     }
 
     @Override
-    public void registerIcons() {
-        for(IconType iconType : IconType.values()){
-            ExoticTradesSquaremap.getPlugin().saveResource("icons/" + iconType.getFileName(), true);
-            try {
-                File file = new File(ExoticTradesSquaremap.getPlugin().getDataFolder(), "icons/" + iconType.getFileName());
-                BufferedImage image = ImageIO.read(file);
-                if(SquaremapProvider.get().iconRegistry().hasEntry(Key.of(iconType.getFileName())))
-                    SquaremapProvider.get().iconRegistry().unregister(Key.of(iconType.getFileName()));
-                SquaremapProvider.get().iconRegistry().register(Key.of(iconType.getFileName()),image);
-            } catch (IOException e) {
-                throw new RuntimeException("Error while loading : " + iconType.getFileName(), e);
-            }
+    public void registerIcon(IconType iconType) {
+        try {
+            File file = new File(ExoticTradeMapCommon.getPlugin().getDataFolder(), "icons/" + iconType.getFileName());
+            BufferedImage image = ImageIO.read(file);
+            Registry<BufferedImage> registry = SquaremapProvider.get().iconRegistry();
+            if(registry.hasEntry(Key.of(iconType.getFileName())))
+                registry.unregister(Key.of(iconType.getFileName()));
+            registry.register(Key.of(iconType.getFileName()),image);
+        } catch (IOException e) {
+            throw new RuntimeException("Erreur lors du chargement de landmark.png", e);
         }
     }
 }

@@ -1,5 +1,6 @@
 package io.github.leralix.extrade.squaremap;
 
+import io.github.leralix.extrade.map.ExoticTradeMapCommon;
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
 import io.github.leralix.extrade.map.markers.IconType;
 import io.github.leralix.interfaces.ExTrader;
@@ -10,9 +11,7 @@ import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerSet;
 import org.leralix.lib.position.Vector3D;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
+import java.util.List;
 
 public class ExtradeDynmapMarkerRegister extends CommonMarkerRegister {
 
@@ -105,15 +104,9 @@ public class ExtradeDynmapMarkerRegister extends CommonMarkerRegister {
     }
 
     @Override
-    public void registerIcons() {
-        for (IconType iconType : IconType.values()) {
-            try {
-                final InputStream in = ExoticTradesDynmap.getPlugin().getResource("icons/" + iconType.getFileName());
-                if (in == null) throw new IOException("Resource not found: " + "icons/" + iconType.getFileName());
-                api.createMarkerIcon(iconType.getIconName(), iconType.getIconName(), in);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+    public void registerIcon(IconType iconType) {
+        api.createMarkerIcon(iconType.getFileName(), iconType.getFileName(),
+                ExoticTradeMapCommon.getPlugin().getResource("icons/" + iconType.getFileName()));
+
     }
 }
