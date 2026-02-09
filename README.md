@@ -1,3 +1,2 @@
-# Exotic Trades - APi
+# Exotic Trades - Maps
 
-Deprecated API of Exotic Trade. Now located inside [Exotic Trade main repo](https://github.com/Leralix/ExoticTrades)
