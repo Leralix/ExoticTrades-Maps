@@ -1,13 +1,8 @@
-package io.github.leralix.extrade.squaremap;
+package io.github.leralix.extrade.dynmap;
 
 
 import io.github.leralix.extrade.map.ExoticTradeMapCommon;
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
-import io.github.leralix.extrade.map.markers.IconType;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class ExoticTradesDynmap extends ExoticTradeMapCommon {
 
@@ -18,7 +13,7 @@ public class ExoticTradesDynmap extends ExoticTradeMapCommon {
 
     @Override
     protected int getBStatID() {
-        return 0;
+        return 29461;
     }
 
     @Override

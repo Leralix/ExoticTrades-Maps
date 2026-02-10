@@ -1,4 +1,4 @@
-package io.github.leralix.extrade.squaremap;
+package io.github.leralix.extrade.bluemap;
 
 import de.bluecolored.bluemap.api.BlueMapAPI;
 import de.bluecolored.bluemap.api.BlueMapMap;

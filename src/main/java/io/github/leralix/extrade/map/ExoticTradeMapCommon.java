@@ -1,6 +1,7 @@
 package io.github.leralix.extrade.map;
 
 import io.github.leralix.ExtradeAPI;
+import io.github.leralix.extrade.map.bstat.Metrics;
 import io.github.leralix.extrade.map.commands.PlayerCommandManager;
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
 import io.github.leralix.extrade.map.markers.IconType;
@@ -62,6 +63,8 @@ public abstract class ExoticTradeMapCommon extends JavaPlugin {
 
         checkConfigVersion();
         initialise();
+
+        new Metrics(this, getBStatID());
 
         logger.info(subMapName + "Plugin is running");
     }

@@ -1,4 +1,4 @@
-package io.github.leralix.extrade.squaremap;
+package io.github.leralix.extrade.dynmap;
 
 import io.github.leralix.extrade.map.ExoticTradeMapCommon;
 import io.github.leralix.extrade.map.markers.CommonMarkerRegister;
