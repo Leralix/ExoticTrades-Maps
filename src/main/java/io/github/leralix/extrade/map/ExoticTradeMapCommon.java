@@ -28,7 +28,7 @@ public abstract class ExoticTradeMapCommon extends JavaPlugin {
     private final Logger logger = this.getLogger();
     private CommonMarkerRegister markerRegister;
     private long updatePeriod;
-    private final PluginVersion pluginVersion = new PluginVersion(0,1 ,0);
+    private final PluginVersion pluginVersion = new PluginVersion(0,1 ,2);
     private UpdateTraders updateTraders;
 
     private final String subMapName = "[ExTrade - " + getSubMapName() + "] - ";
